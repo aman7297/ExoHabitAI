@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ExoHabitAI — Exoplanet Habitability Predictor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- Deep space canvas -->
+<canvas id="bg"></canvas>
+
+<!-- Scan line overlay -->
+<div class="scanlines"></div>
+
+<!-- Corner HUD decorations -->
+<div class="hud-corner hud-tl"></div>
+<div class="hud-corner hud-tr"></div>
+<div class="hud-corner hud-bl"></div>
+<div class="hud-corner hud-br"></div>
+
+<!-- ══ HEADER ══════════════════════════════════════════════ -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-logo">
+      <div class="logo-ring-wrap">
+        <div class="logo-ring r1"></div>
+        <div class="logo-ring r2"></div>
+        <div class="logo-core"></div>
+      </div>
+      <div class="logo-text-wrap">
+        <div class="logo-name">EXOHABIT<span class="logo-ai">AI</span></div>
+        <div class="logo-tagline">// HABITABILITY PREDICTION SYSTEM v2.6</div>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <a href="#home"       class="hnav active">HOME</a>
+      <a href="#predict"    class="hnav">PREDICT</a>
+      <a href="#batch"      class="hnav">BATCH</a>
+      <a href="#ranking"    class="hnav">RANKING</a>
+      <a href="#milestones" class="hnav">PIPELINE</a>
+    </nav>
+    <div class="header-status">
+      <span class="status-dot"></span>
+      <span class="status-txt">SYSTEM ONLINE</span>
+    </div>
+  </div>
+  <div class="header-line"></div>
+</header>
+
+<!-- ══ HERO ════════════════════════════════════════════════ -->
+<section id="home" class="hero-section">
+  <div class="hero-grid-lines"></div>
+
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-chip">
+        <span class="chip-pulse"></span> NASA TESS · HYBRID ML · 90% ACCURACY
+      </div>
+      <h1 class="hero-title">
+        <span class="ht-line">DISCOVER</span>
+        <span class="ht-line ht-glow">THE NEXT</span>
+        <span class="ht-line ht-accent">HABITABLE WORLD</span>
+      </h1>
+      <p class="hero-desc">Advanced machine learning system for predicting exoplanet habitability. Powered by hybrid stacking ensemble trained on real NASA TESS data.</p>
+      <div class="hero-btns">
+        <a href="#predict" class="btn-primary">
+          <span class="btn-scan"></span>ANALYZE PLANET
+        </a>
+        <a href="#ranking" class="btn-ghost">VIEW RANKINGS →</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <!-- Animated planet -->
+      <div class="planet-system">
+        <div class="planet-glow-outer"></div>
+        <div class="orbit orbit-1"><div class="sat sat-1"></div></div>
+        <div class="orbit orbit-2"><div class="sat sat-2"></div></div>
+        <div class="orbit orbit-3"><div class="sat sat-3"></div></div>
+        <div class="planet">
+          <div class="planet-surface"></div>
+          <div class="planet-atmo"></div>
+          <div class="planet-shine"></div>
+        </div>
+        <!-- Data readouts floating around planet -->
+        <div class="planet-tag pt-1"><span class="ptag-k">TEMP</span><span class="ptag-v">280K</span></div>
+        <div class="planet-tag pt-2"><span class="ptag-k">RADIUS</span><span class="ptag-v">1.2 R⊕</span></div>
+        <div class="planet-tag pt-3"><span class="ptag-k">HAB</span><span class="ptag-v gv">✓ YES</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stat bar -->
+  <div class="stat-bar">
+    <div class="stat-item">
+      <div class="stat-val">6,147</div>
+      <div class="stat-lbl">CONFIRMED EXOPLANETS</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <div class="stat-val">90%</div>
+      <div class="stat-lbl">MODEL ACCURACY</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <div class="stat-val">19</div>
+      <div class="stat-lbl">INPUT FEATURES</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <div class="stat-val">HYBRID</div>
+      <div class="stat-lbl">ML STACKING</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <div class="stat-val">83.31%</div>
+      <div class="stat-lbl">RECALL RATE</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PREDICT ══════════════════════════════════════════════ -->
+<section id="predict" class="content-section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-label">// MODULE 01</div>
+      <h2 class="sec-title">SINGLE PLANET <span class="title-accent">ANALYSIS</span></h2>
+      <p class="sec-desc">Enter all 19 exoplanet parameters below. Use <span class="inline-btn" onclick="fillExample()">LOAD SAMPLE</span> to prefill an Earth-like planet.</p>
+    </div>
+
+    <div class="panel-grid">
+
+      <!-- Left: form -->
+      <div class="form-panel">
+        <div class="panel-hud-bar">
+          <span>PARAMETER INPUT</span>
+          <span class="phb-dots"><i></i><i></i><i></i></span>
+        </div>
+
+        <form id="predictForm" novalidate>
+
+          <div class="field-simple">
+            <label class="fl">PLANET DESIGNATION</label>
+            <input type="text" class="fi" id="planet_name" placeholder="e.g. Kepler-442b"/>
+          </div>
+
+          <div class="param-group">
+            <div class="pg-title"><span class="pg-dot cyan-d"></span>PLANETARY PARAMETERS</div>
+            <div class="fg2">
+              <div class="fwrap"><label class="fl">RADIUS <em>R⊕</em></label><input type="number" class="fi" id="planet_radius" step="any" placeholder="1.2" min="0.1" max="30" required/><span class="fh">0.1–30</span><span class="fe">0.1–30</span></div>
+              <div class="fwrap"><label class="fl">MASS <em>M⊕</em></label><input type="number" class="fi" id="planet_mass" step="any" placeholder="1.1" min="0.01" max="5000" required/><span class="fh">0.01–5000</span><span class="fe">0.01–5000</span></div>
+              <div class="fwrap"><label class="fl">ORBITAL PERIOD <em>days</em></label><input type="number" class="fi" id="orbital_period" step="any" placeholder="365" min="0.1" max="100000" required/><span class="fh">0.1–100000</span><span class="fe">0.1–100000</span></div>
+              <div class="fwrap"><label class="fl">SEMI-MAJOR AXIS <em>AU</em></label><input type="number" class="fi" id="semi_major_axis" step="any" placeholder="1.0" min="0.001" max="100" required/><span class="fh">0.001–100</span><span class="fe">0.001–100</span></div>
+              <div class="fwrap"><label class="fl">EQ. TEMPERATURE <em>K</em></label><input type="number" class="fi" id="equilibrium_temperature" step="any" placeholder="280" min="10" max="5000" required/><span class="fh">10–5000</span><span class="fe">10–5000</span></div>
+              <div class="fwrap"><label class="fl">ECCENTRICITY</label><input type="number" class="fi" id="orbital_eccentricity" step="any" placeholder="0.02" min="0" max="1" required/><span class="fh">0–1</span><span class="fe">0–1</span></div>
+              <div class="fwrap"><label class="fl">DENSITY <em>g/cm³</em></label><input type="number" class="fi" id="planet_density" step="any" placeholder="5.5" min="0" max="100" required/><span class="fh">0–100</span><span class="fe">0–100</span></div>
+              <div class="fwrap"><label class="fl">INSOLATION FLUX</label><input type="number" class="fi" id="insolation_flux" step="any" placeholder="1.0" min="0" max="100000" required/><span class="fh">0–100000</span><span class="fe">0–100000</span></div>
+            </div>
+          </div>
+
+          <div class="param-group">
+            <div class="pg-title"><span class="pg-dot amber-d"></span>STELLAR PARAMETERS</div>
+            <div class="fg2">
+              <div class="fwrap"><label class="fl">STAR TEMPERATURE <em>K</em></label><input type="number" class="fi" id="star_temperature" step="any" placeholder="5778" min="2000" max="50000" required/><span class="fh">2000–50000</span><span class="fe">2000–50000</span></div>
+              <div class="fwrap"><label class="fl">LUMINOSITY <em>log L☉</em></label><input type="number" class="fi" id="star_luminosity" step="any" placeholder="0.0" min="-5" max="6" required/><span class="fh">-5–6</span><span class="fe">-5–6</span></div>
+              <div class="fwrap"><label class="fl">METALLICITY <em>dex</em></label><input type="number" class="fi" id="star_metallicity" step="any" placeholder="0.0" min="-3" max="1.5" required/><span class="fh">-3–1.5</span><span class="fe">-3–1.5</span></div>
+              <div class="fwrap"><label class="fl">STAR MASS <em>M☉</em></label><input type="number" class="fi" id="star_mass" step="any" placeholder="1.0" min="0.05" max="150" required/><span class="fh">0.05–150</span><span class="fe">0.05–150</span></div>
+            </div>
+            <!-- Star type -->
+            <div class="pg-title mt2"><span class="pg-dot purple-d"></span>SPECTRAL TYPE</div>
+            <div class="stype-row">
+              <label class="stype-btn"><input type="radio" name="stype" value="G"/><span><span class="sorb" style="background:radial-gradient(circle at 35% 35%,#fde68a,#d97706)"></span>G-TYPE</span></label>
+              <label class="stype-btn"><input type="radio" name="stype" value="K"/><span><span class="sorb" style="background:radial-gradient(circle at 35% 35%,#fed7aa,#c2410c)"></span>K-TYPE</span></label>
+              <label class="stype-btn"><input type="radio" name="stype" value="M"/><span><span class="sorb" style="background:radial-gradient(circle at 35% 35%,#fca5a5,#991b1b)"></span>M-TYPE</span></label>
+              <label class="stype-btn"><input type="radio" name="stype" value="Unknown"/><span><span class="sorb" style="background:radial-gradient(circle at 35% 35%,#cbd5e1,#475569)"></span>UNKNOWN</span></label>
+            </div>
+            <div id="stErr" class="ferr-b d-none">⚠ Select a spectral type</div>
+          </div>
+
+          <div class="param-group">
+            <div class="pg-title"><span class="pg-dot green-d"></span>DERIVED SCORES (0–1)</div>
+            <div class="fg3">
+              <div class="fwrap"><label class="fl">HABITABILITY INDEX</label><input type="number" class="fi" id="habitability_index" step="any" placeholder="0.85" min="0" max="1" required/><span class="fh">0–1</span><span class="fe">0–1</span></div>
+              <div class="fwrap"><label class="fl">STELLAR COMPATIBILITY</label><input type="number" class="fi" id="stellar_compatibility" step="any" placeholder="0.9" min="0" max="1" required/><span class="fh">0–1</span><span class="fe">0–1</span></div>
+              <div class="fwrap"><label class="fl">ORBITAL STABILITY</label><input type="number" class="fi" id="orbital_stability" step="any" placeholder="0.95" min="0" max="1" required/><span class="fh">0–1</span><span class="fe">0–1</span></div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-ghost-sm" onclick="fillExample()">LOAD SAMPLE</button>
+            <button type="button" class="btn-danger-sm" onclick="resetForm()">CLEAR</button>
+            <button type="submit" class="btn-primary btn-submit" id="subBtn">
+              <span class="btn-scan"></span>
+              <span id="subLbl">ANALYZE</span>
+              <span class="spin d-none" id="subSpin">↻</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Result -->
+        <div id="resultBox" class="result-box d-none">
+          <div class="result-hud-bar">ANALYSIS COMPLETE</div>
+          <div id="resultBanner" class="result-banner"></div>
+          <div class="result-cards">
+            <div class="rc"><div class="rc-l">VERDICT</div><div class="rc-v" id="rv">—</div></div>
+            <div class="rc">
+              <div class="rc-l">CONFIDENCE</div>
+              <div class="rc-v" id="rc_val">—</div>
+              <div class="conf-track"><div class="conf-bar" id="cBar"></div></div>
+            </div>
+            <div class="rc"><div class="rc-l">LEVEL</div><div class="rc-v" id="rl">—</div></div>
+          </div>
+          <table class="res-tbl"><thead><tr><th>PARAMETER</th><th>VALUE</th></tr></thead><tbody id="rBody"></tbody></table>
+        </div>
+        <div id="errBox" class="err-box d-none"><span class="eb-ico">!</span><span id="errMsg"></span></div>
+      </div>
+
+      <!-- Right: sidebar panels -->
+      <div class="side-panels">
+
+        <!-- Batch -->
+        <div class="panel" id="batch">
+          <div class="panel-hud-bar"><span>BATCH PREDICTION</span><span class="phb-dots"><i></i><i></i><i></i></span></div>
+          <p class="panel-desc">Analyze multiple exoplanets simultaneously. Paste JSON array or upload CSV with 19 features per planet.</p>
+          <div class="batch-tabs">
+            <button class="btab active" onclick="swTab('json')" id="tj">JSON</button>
+            <button class="btab" onclick="swTab('csv')" id="tc">CSV</button>
+          </div>
+          <div id="pj"><textarea class="bta" id="bJson" rows="5" placeholder='[{"planet_radius":1.2,...}]'></textarea></div>
+          <div id="pc" class="d-none">
+            <div class="csv-drop" onclick="document.getElementById('cf').click()">
+              <div class="csv-icon">⬆</div><div class="csv-txt">UPLOAD CSV FILE</div>
+              <input type="file" id="cf" accept=".csv" style="display:none" onchange="handleCsv(this)"/>
+            </div>
+          </div>
+          <div class="batch-acts">
+            <button class="btn-ghost-sm" onclick="loadSample()">LOAD SAMPLE</button>
+            <button class="btn-primary" onclick="runBatch()" id="bBtn">
+              <span class="btn-scan"></span>PROCESS
+              <span class="spin d-none" id="bSpin">↻</span>
+            </button>
+          </div>
+          <div id="bOut" class="batch-out d-none"></div>
+
+          <!-- How it works -->
+          <div class="hiw">
+            <div class="hiw-title">// HOW IT WORKS</div>
+            <div class="hiw-step"><div class="hiw-num">01</div><div><div class="hiw-lbl">UPLOAD DATA</div><div class="hiw-sub">CSV or JSON with 19 features per object</div></div></div>
+            <div class="hiw-step"><div class="hiw-num">02</div><div><div class="hiw-lbl">PREVIEW & REVIEW</div><div class="hiw-sub">Review entries before processing</div></div></div>
+            <div class="hiw-step"><div class="hiw-num">03</div><div><div class="hiw-lbl">GET RESULTS</div><div class="hiw-sub">ML evaluates habitability with confidence scores</div></div></div>
+          </div>
+        </div>
+
+        <!-- Rankings -->
+        <div class="panel" id="ranking">
+          <div class="panel-hud-bar"><span>HABITABILITY RANKINGS</span><span class="phb-dots"><i></i><i></i><i></i></span></div>
+          <p class="panel-desc">Top exoplanet candidates ranked by habitability confidence score.</p>
+          <div class="rank-ctrl">
+            <div class="rctrl">
+              <label class="fl">RESULTS: <strong id="rcV">20</strong></label>
+              <input type="range" class="rslider" id="rcnt" min="5" max="30" value="20" oninput="document.getElementById('rcV').textContent=this.value"/>
+            </div>
+            <div class="rctrl">
+              <label class="fl">MIN SCORE: <strong id="rmV">0.50</strong></label>
+              <input type="range" class="rslider" id="rmin" min="0" max="1" step="0.05" value="0.5" oninput="document.getElementById('rmV').textContent=parseFloat(this.value).toFixed(2)"/>
+            </div>
+          </div>
+          <button class="btn-amber w100" onclick="loadRank()">▼ APPLY FILTERS</button>
+          <div id="rankOut" class="rank-out d-none"></div>
+          <div id="rankEmpty" class="rank-empty">Click Apply Filters to load rankings</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MILESTONES ═══════════════════════════════════════════ -->
+<section id="milestones" class="ms-section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-label">// MISSION LOG</div>
+      <h2 class="sec-title">PROJECT <span class="title-accent">PIPELINE</span></h2>
+      <p class="sec-desc">From raw NASA TESS data to a live prediction interface — the complete ML pipeline.</p>
+    </div>
+
+    <div class="ms-track">
+      <div class="ms-line"></div>
+      <div class="ms-nodes">
+        <div class="ms-node"><div class="msn-num">01</div><div class="msn-dot done-dot"></div><div class="msn-card"><div class="msn-status done">● COMPLETE</div><div class="msn-icon blue-ic"><svg viewBox="0 0 20 20" fill="none" width="16"><rect x="2" y="4" width="16" height="13" rx="2" stroke="#38bdf8" stroke-width="1.4"/><line x1="6" y1="9" x2="14" y2="9" stroke="#38bdf8" stroke-width="1"/></svg></div><div class="msn-title">DATA ENGINEERING</div><div class="msn-desc">Processed NASA exoplanet archive with advanced feature engineering</div><div class="msn-tags"><span class="mtag">pandas</span><span class="mtag">NASA TESS</span></div></div></div>
+        <div class="ms-node"><div class="msn-num">02</div><div class="msn-dot done-dot"></div><div class="msn-card"><div class="msn-status done">● COMPLETE</div><div class="msn-icon purple-ic"><svg viewBox="0 0 20 20" fill="none" width="16"><path d="M4 14l3-5 4 3 4-7 3 4" stroke="#a78bfa" stroke-width="1.4" stroke-linecap="round"/></svg></div><div class="msn-title">MACHINE LEARNING</div><div class="msn-desc">Hybrid Stacking Ensemble — 90% accuracy, 83.31% recall</div><div class="msn-tags"><span class="mtag">XGBoost</span><span class="mtag">GridSearchCV</span></div></div></div>
+        <div class="ms-node"><div class="msn-num">03</div><div class="msn-dot done-dot"></div><div class="msn-card"><div class="msn-status done">● COMPLETE</div><div class="msn-icon cyan-ic"><svg viewBox="0 0 20 20" fill="none" width="16"><rect x="2" y="4" width="16" height="12" rx="2" stroke="#22d3ee" stroke-width="1.4"/><path d="M7 10l3-3 3 3" stroke="#22d3ee" stroke-width="1.4" stroke-linecap="round"/></svg></div><div class="msn-title">BACKEND API</div><div class="msn-desc">Flask REST API with /predict and /rank, full validation</div><div class="msn-tags"><span class="mtag">Flask</span><span class="mtag">REST API</span></div></div></div>
+        <div class="ms-node"><div class="msn-num">04</div><div class="msn-dot active-dot"></div><div class="msn-card msn-active"><div class="msn-status active">◉ ACTIVE</div><div class="msn-icon green-ic"><svg viewBox="0 0 20 20" fill="none" width="16"><rect x="2" y="2" width="16" height="12" rx="2" stroke="#4ade80" stroke-width="1.4"/><line x1="2" y1="17" x2="18" y2="17" stroke="#4ade80" stroke-width="1.4"/></svg></div><div class="msn-title">FRONTEND UI</div><div class="msn-desc">This interface — futuristic design, full API integration</div><div class="msn-tags"><span class="mtag mtag-g">Bootstrap</span><span class="mtag mtag-g">Fetch API</span></div></div></div>
+      </div>
+    </div>
+
+    <!-- Pipeline flow -->
+    <div class="pipeline">
+      <div class="pn"><div class="pn-ic">📡</div><div class="pn-l">NASA TESS</div></div>
+      <div class="parr"></div>
+      <div class="pn"><div class="pn-ic">⚙️</div><div class="pn-l">PREPROCESSING</div></div>
+      <div class="parr"></div>
+      <div class="pn"><div class="pn-ic">🧠</div><div class="pn-l">ML TRAINING</div></div>
+      <div class="parr"></div>
+      <div class="pn"><div class="pn-ic">🔌</div><div class="pn-l">FLASK API</div></div>
+      <div class="parr"></div>
+      <div class="pn pn-active"><div class="pn-ic">🌐</div><div class="pn-l">THIS UI</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="footer-line"></div>
+  <div class="wrap footer-inner">
+    <div class="ft-brand">
+      <div class="ft-logo">EXOHABIT<span style="color:var(--cyan)">AI</span></div>
+      <div class="ft-sub">Advanced ML system for predicting exoplanet habitability.<br>Powered by hybrid stacking ensemble.</div>
+    </div>
+    <div class="ft-links">
+      <div class="ft-title">// QUICK LINKS</div>
+      <a href="#home"       class="ftl">HOME</a>
+      <a href="#predict"    class="ftl">PREDICT</a>
+      <a href="#batch"      class="ftl">BATCH</a>
+      <a href="#ranking"    class="ftl">RANKING</a>
+      <a href="#milestones" class="ftl">PIPELINE</a>
+    </div>
+    <div class="ft-connect">
+      <div class="ft-title">// CONNECT</div>
+      <a href="https://github.com/aman7297" class="ft-btn" target="_blank">⌥ GITHUB</a>
+      <a href="https://linkedin.com/in/aman-kumar-p7297" class="ft-btn" target="_blank">in LINKEDIN</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    AMAN KUMAR &nbsp;·&nbsp; KIIT UNIVERSITY &nbsp;·&nbsp; BTECH CSE 2026 &nbsp;·&nbsp; DATA SCIENCE INTERNSHIP · INFOSYS
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
